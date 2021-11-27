@@ -13,10 +13,12 @@ echo
 
 # Determine whether to setup as control plane or worker node
 KUBEBLOOM_MODE="c"
-ANS=""
-while [[ "$ANS" != "c" && "$ANS" != "w" ]]; do
-    read -p "Do you want to setup the machine as a control plane (c) or worker node (w)? [c/w] " ANS
-done
+if prompt "Do you want to setup the machine as a control plane (c) or worker node (w)?" "c" "w"; then
+    KUBEBLOOM_MODE="c"
+else
+    KUBEBLOOM_MODE="w"
+fi
+
 if [[ "$KUBEBLOOM_MODE" == "c" ]]; then
     step_info "kubebloom will setup and initialize a kubernetes control plane node"
 else
@@ -37,7 +39,7 @@ check_kube_ports_available $KUBEADM_PORTS
 install_k8s_binaries
 
 # Start the kubelet
-if prompt_yn "Would you like to enable the kubelet now?"; then
+if prompt "Would you like to enable the kubelet now?" "y" "n"; then
     step_info "Enabling the kubelet..."
     systemctl enable --now kubelet
 else
