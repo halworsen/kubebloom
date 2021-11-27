@@ -6,7 +6,7 @@ source ./node_init.sh
 
 step_info "kubebloom"
 step_info "========="
-step_info "kubebloom will setup this machine as a Kubernetes node according to the official kubeadm installation guide."
+step_info "kubebloom will setup this machine as a kubernetes node according to the official kubeadm installation guide."
 step_info "You will be prompted during installation for certain important choices."
 step_info "Steps which utilize privilege escalation are always marked with bold text."
 echo
@@ -18,9 +18,9 @@ while [[ "$ANS" != "c" && "$ANS" != "w" ]]; do
     read -p "Do you want to setup the machine as a control plane (c) or worker node (w)? [c/w] " ANS
 done
 if [[ "$KUBEBLOOM_MODE" == "c" ]]; then
-    step_info "kubebloom will setup and initialize a Kubernetes control plane node"
+    step_info "kubebloom will setup and initialize a kubernetes control plane node"
 else
-    step_info "kubebloom will setup and initialize a Kubernetes worker node"
+    step_info "kubebloom will setup and initialize a kubernetes worker node"
 fi
 prompt_continue_abort
 

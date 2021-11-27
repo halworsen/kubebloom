@@ -29,8 +29,8 @@ setup_br_netfilter()
 # Setup iptables to see bridged traffic
 setup_iptables_bridged_traffic()
 {
-    SYSCTL_CFG_PATH=/etc/sysctl.d/k8s.conf
-    IPTABLES_SYSCTL_CFG=""
+    local SYSCTL_CFG_PATH=/etc/sysctl.d/k8s.conf
+    local IPTABLES_SYSCTL_CFG=""
     step_info "[kubeadm setup] Checking if iptables can see bridged traffic..."
 
     # ipv4
@@ -60,12 +60,12 @@ setup_iptables_bridged_traffic()
 # Check if required ports are in use
 check_kube_ports_available()
 {
-    step_info "[kubeadm setup] Checking if Kubernetes ports are available"
+    step_info "[kubeadm setup] Checking if kubernetes ports are available"
 
-    PORTS=("$@")
+    local PORTS=("$@")
     for i in $1; do
         if lsof -i -P -n | grep LISTEN | grep "${PORTS[$i]}"; then
-            step_error "[kubeadm setup] Port ${PORTS[$i]} is in use, but is required by Kubernetes. Aborting"
+            step_error "[kubeadm setup] Port ${PORTS[$i]} is in use, but is required by kubernetes. Aborting"
             exit 1
         fi
     done
@@ -76,7 +76,7 @@ check_kube_ports_available()
 # what it says on the tin
 install_k8s_binaries()
 {
-    KUBEBLOOM_START_DIR=$(pwd)
+    local KUBEBLOOM_START_DIR=$(pwd)
 
     # Install CNI plugins
     step_info "\e[1m[kubeadm setup] Installing CNI plugins\e[0m"
@@ -96,7 +96,7 @@ install_k8s_binaries()
     step_info "\e[1m[kubeadm setup] Installing kubeadm, kubelet and kubectl\e[0m"
 
     cd $KUBEBLOOM_DL_DIR
-    step_info "[kubeadm setup] Downloading kubeadm, kubelet and kubectl"
+    step_info "[kubeadm setup] Downloading kubeadm, kubelet and kubectl binaries"
     sudo curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/${KUBEBLOOM_BINARIES_RELEASE}/bin/linux/${KUBEBLOOM_ARCH}/{kubeadm,kubelet,kubectl}
     sudo chmod +x {kubeadm,kubelet,kubectl}
 

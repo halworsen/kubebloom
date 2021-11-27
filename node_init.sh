@@ -67,7 +67,7 @@ init_worker_node()
     step_info "[cluster initialization] During control plane note initialization, you were given a join command. Please enter it now."
     step_info "[cluster initialization] If you have lost the join command, you can get a new one by running the following command on the control plane node: kubeadm token create --print-join-command"
 
-    KUBEADM_JOIN_CMD=""
+    local KUBEADM_JOIN_CMD=""
     prompt -p "Kubeadm join command>" KUBEADM_JOIN_CMD
     eval "$KUBEADM_JOIN_CMD"
 }
